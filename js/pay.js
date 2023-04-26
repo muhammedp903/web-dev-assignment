@@ -1,40 +1,41 @@
-window.onload = (e)=> {
-    e.preventDefault();
-
+window.onload = ()=> {
     const submitButton = document.getElementById("submit");
-    submitButton.addEventListener("click", ()=>{
+    submitButton.addEventListener("click", (e)=>{
+        e.preventDefault();
+
         const cardForm = document.forms["credit-card"];
         const cardNum = cardForm["card-num"].value;
-        const expiryMonth = cardForm["expiry-month"].value;
-        const expiryYear = cardForm["expiry-year"].value;
+        const expiryMonth = parseInt(cardForm["expiry-month"].value);
+        const expiryYear = parseInt(cardForm["expiry-year"].value);
         const cvvCode = cardForm["cvv-code"].value;
-
-        console.log(cardNum, expiryYear, expiryMonth, cvvCode);
 
         const cardTest = /^5[1-5][0-9]{14}$/;
         if(!cardTest.test(cardNum)){
             alert("Invalid card number");
-            location.reload();
+            // location.reload();
+            return;
         }
 
         const today = new Date();
         const tYear = today.getFullYear();
-        const tMonth = today.getMonth();
-        if(expiryYear<tYear || (expiryMonth<=tMonth && expiryYear === tYear)){
+        const tMonth = today.getMonth()+1;
+        if(expiryYear<tYear || (expiryMonth<tMonth && expiryYear === tYear)){
             alert("Card expired");
-            location.reload();
+            // location.reload();
+            return;
         }
 
         const cvvTest = /^[0-9]{3,4}$/
         if(!cvvTest.test(cvvCode)){
             alert("Invalid CVV code");
-            location.reload();
+            // location.reload();
+            return;
         }
 
         const data = {
             "master_card": parseInt(cardNum),
-            "exp_year": parseInt(expiryYear),
-            "exp_month": parseInt(expiryMonth),
+            "exp_year": expiryYear,
+            "exp_month": expiryMonth,
             "cvv_code": cvvCode
         }
         const url = "https://mudfoot.doc.stu.mmu.ac.uk/node/api/creditcard";
