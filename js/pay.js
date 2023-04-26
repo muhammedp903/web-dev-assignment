@@ -1,7 +1,9 @@
 window.onload = ()=> {
+    const errorMsg = document.getElementById("error-msg");
     const submitButton = document.getElementById("submit");
     submitButton.addEventListener("click", (e)=>{
         e.preventDefault();
+        errorMsg.innerHTML = "";
 
         const cardForm = document.forms["credit-card"];
         const cardNum = cardForm["card-num"].value;
@@ -11,7 +13,7 @@ window.onload = ()=> {
 
         const cardTest = /^5[1-5][0-9]{14}$/;
         if(!cardTest.test(cardNum)){
-            alert("Invalid card number");
+            errorMsg.innerHTML = "Invalid card number";
             // location.reload();
             return;
         }
@@ -20,14 +22,14 @@ window.onload = ()=> {
         const tYear = today.getFullYear();
         const tMonth = today.getMonth()+1;
         if(expiryYear<tYear || (expiryMonth<tMonth && expiryYear === tYear)){
-            alert("Card expired");
+            errorMsg.innerHTML = "Expiry date is in the past";
             // location.reload();
             return;
         }
 
         const cvvTest = /^[0-9]{3,4}$/
         if(!cvvTest.test(cvvCode)){
-            alert("Invalid CVV code");
+            errorMsg.innerHTML = "Invalid CVV code";
             // location.reload();
             return;
         }
@@ -46,22 +48,25 @@ window.onload = ()=> {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
-        })
-            .then(r => {
+        }
+        ).then(r => {
             if (r.status === 200){
                 return r.json();
             }else if(r.status === 400){
-                throw "Bad data";
+                throw "Something doesn't look right";
             }else {
-                throw "Something wrong";
+                throw "Something went wrong :(";
             }
-        })
-            .then((resJson) => {
-            alert(resJson["message"]); // TODO: Success
-        })
-            .catch((error) => {
+        }
+        ).then((resJson) => {
+            alert(resJson.message)
+            let url = "success.html";
+            url += "?card=" + cardNum.substring(12);
+            location.replace(url);
+        }
+        ).catch((error) => {
             console.log(error.toString());
-            alert(error); // TODO: Error
+            alert(error);
         })
     });
 }

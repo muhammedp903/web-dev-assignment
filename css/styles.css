@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+/*Title and navigation*/
+
 .title-div{
     margin-left: 2vw;
     margin-right: 2vw;
@@ -55,6 +57,8 @@ ul{
     padding: 4px;
 }
 
+/*Home page*/
+
 #book-list-div{
     display: flex;
     flex-direction: row;
@@ -71,7 +75,7 @@ ul{
 
 }
 
-@media (max-width: 900px) {
+@media screen and (max-width: 992px) {
     #book-list-div {
         flex-direction: column;
     }
@@ -89,6 +93,8 @@ ul{
     font-size: medium;
 }
 
+/*Payment page + success page*/
+
 .cc-div{
     display: flex;
     flex-flow: row nowrap;
@@ -97,3 +103,45 @@ ul{
 .cc-text{
     padding-right: 10px;
 }
+
+/*Payment page*/
+
+.form-left{
+    float: left;
+    width: 15%;
+}
+.form-right{
+    float: left;
+    width: 50%;
+}
+#card-num{
+    width: 100%;
+    max-width: 250px;
+}
+#cvv-code{
+    width: 50%;
+    max-width: 100px;
+}
+@media screen and (max-width: 700px) {
+    .form-left, .form-right{
+        width: 100%;
+        padding-bottom: 5px;
+    }
+    input, select{
+        margin-bottom: 10px;
+    }
+}
+
+/*Success page*/
+
+#error-msg{
+    color: red;
+}
+#error-msg::after{
+    /*Add space to keep the position on screen when error message is empty*/
+    content: '\00a0 ';
+}
+
+
+
+/*https://stackoverflow.com/questions/72447527/how-to-set-an-empty-paragraph-element-to-the-minimum-height-of-the-font-size-te*/
