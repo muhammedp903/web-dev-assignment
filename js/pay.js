@@ -1,6 +1,7 @@
 window.onload = ()=> {
     const errorMsg = document.getElementById("error-msg");
     const submitButton = document.getElementById("submit");
+
     submitButton.addEventListener("click", (e)=>{
         e.preventDefault();
         errorMsg.innerHTML = "";
@@ -49,24 +50,24 @@ window.onload = ()=> {
             },
             body: JSON.stringify(data)
         }
-        ).then(r => {
-            if (r.status === 200){
-                return r.json();
-            }else if(r.status === 400){
+        ).then(res => {
+            if (res.status === 200){
+                return res.json();
+            }else if(res.status === 400){
                 throw "Something doesn't look right";
             }else {
                 throw "Something went wrong :(";
             }
         }
         ).then((resJson) => {
-            alert(resJson.message)
-            let url = "success.html";
-            url += "?card=" + cardNum.substring(12);
-            location.replace(url);
+            alert(resJson.message);
+            let successUrl = "success.html";
+            successUrl += "?card=" + cardNum.substring(12);
+            location.replace(successUrl);
         }
         ).catch((error) => {
             console.log(error.toString());
-            alert(error);
+            errorMsg.innerHTML = error;
         })
     });
 }
