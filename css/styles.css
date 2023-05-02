@@ -72,18 +72,7 @@ ul{
     display: flex;
     align-items: center;
     flex-flow: row nowrap;
-
 }
-
-@media screen and (max-width: 992px) {
-    #book-list-div {
-        flex-direction: column;
-    }
-    .book-item-div{
-        width: 80vw;
-    }
-}
-
 .book-img{
     padding-right: 10px;
     width: 40%;
@@ -92,6 +81,20 @@ ul{
     width: 60%;
     font-size: large;
 }
+@media screen and (max-width: 992px) {
+    #book-list-div {
+        flex-direction: column;
+    }
+    .book-item-div{
+        width: 90vw;
+    }
+}
+@media screen and (max-width: 600px) {
+    .book-desc-div{
+        font-size: small;
+    }
+}
+
 
 /*Payment page + success page*/
 
@@ -145,3 +148,4 @@ ul{
 
 
 /*https://stackoverflow.com/questions/72447527/how-to-set-an-empty-paragraph-element-to-the-minimum-height-of-the-font-size-te*/
+/*https://stackoverflow.com/a/58868160*/
